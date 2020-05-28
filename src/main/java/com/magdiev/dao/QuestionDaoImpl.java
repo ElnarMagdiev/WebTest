@@ -20,7 +20,7 @@ public class QuestionDaoImpl implements QuestionDao {
 
     @Override
     public List<Question> allQuestions() {
-        String sql = "SELECT * FROM questions";
+      String sql = "SELECT * FROM schema_web.questions";
         List<Question> listQuestion = jdbcTemplate.query(sql,
                 BeanPropertyRowMapper.newInstance(Question.class));
 
@@ -29,16 +29,28 @@ public class QuestionDaoImpl implements QuestionDao {
 
     @Override
     public void add(Question question) {
-
+        String sql = "INSERT INTO schema_web.questions(id, content) VALUES (?,?)";
+        jdbcTemplate.update(sql, question.getId(), question.getContent());
     }
 
     @Override
-    public void update(int id) {
-
+    public void update(Question question) {
+        String sql = "UPDATE schema_web.questions SET content = ? WHERE id = ?";
+        jdbcTemplate.update(sql, question.getContent(), question.getId());
     }
 
     @Override
-    public void remove(int id) {
-
+    public void delete(Question question) {
+        String sql = "DELETE FROM schema_web.questions WHERE id = ?";
+        jdbcTemplate.update(sql, question.getId());
     }
+
+    @Override
+    public Question getQuestionById(int id) {
+        String sql = "SELECT * FROM schema_web.questions WHERE id = ?";
+        return (Question) jdbcTemplate.queryForObject(sql,
+                                                        new Object[]{id},
+                                                            BeanPropertyRowMapper.newInstance(Question.class));
+    }
+
 }

@@ -7,6 +7,8 @@ import java.util.List;
 public interface QuestionDao {
     List<Question> allQuestions();
     void add(Question question);
-    void update(int id);
-    void remove(int id);
+    void update(Question question);
+    void delete(Question question);
+    Question getQuestionById(int id);
+
 }

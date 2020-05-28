@@ -22,6 +22,9 @@ public class Question {
         this.answers = answers;
     }
 
+    public Question() {
+    }
+
     public int getId() {
         return id;
     }

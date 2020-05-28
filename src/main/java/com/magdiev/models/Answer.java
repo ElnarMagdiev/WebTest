@@ -24,6 +24,9 @@ public class Answer {
         this.content = content;
     }
 
+    public Answer() {
+    }
+
     public int getId() {
         return id;
     }
