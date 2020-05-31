@@ -8,17 +8,26 @@
 </head>
 <body>
 <h3>Web Testing</h3>
+<form method="post" action="${pageContext.request.contextPath}/submit">
 <ol type="1">
     <c:forEach var="question" items="${listQuestion}">
         <li>
                 ${question.content}
+                    <a href="/question/add">edit</a>
+            <input type="hidden" name="questionId" value="${question.id}">
             <ol type="a">
             <c:forEach var="answer" items="${question.answers}">
-                <li>${answer.content}</li>
+                <li>
+                    <input type="radio" name="question_${question.id}" value=${answer.id}>
+                        ${answer.content}
+                </li>
             </c:forEach>
             </ol>
         </li>
     </c:forEach>
 </ol>
+    <br>
+    <input type="submit" value="Submit">
+</form>
 </body>
 </html>

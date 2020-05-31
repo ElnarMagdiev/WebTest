@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class AnswerDaoImpl implements AnswerDao {
@@ -19,7 +22,18 @@ public class AnswerDaoImpl implements AnswerDao {
 
     @Override
     public List<Answer> getAnswersByQuestionId(int questionId) {
-        return null;
+        String sql = "SELECT * FROM schema_web.answers WHERE id_question = ?";
+        List<Answer> answerList = new ArrayList<Answer>();
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, questionId);
+        for (Map row: rows) {
+            Answer answer = new Answer();
+            answer.setId((Integer) row.get("id"));
+            answer.setContent((String)row.get("content"));
+            answer.setCorrect((Boolean) row.get("isCorrect"));
+            answer.setId_question((Integer)row.get("id_question"));
+            answerList.add(answer);
+        }
+        return answerList;
     }
 
     @Override
@@ -59,5 +73,16 @@ public class AnswerDaoImpl implements AnswerDao {
         return (Answer) jdbcTemplate.queryForObject(sql,
                 new Object[]{id},
                 BeanPropertyRowMapper.newInstance(Answer.class));
+    }
+
+    @Override
+    public int findCorrectAnswerByQuestionId(int id_question) {
+
+        for (Answer answer: getAnswersByQuestionId(id_question)) {
+            if (answer.isCorrect()) {
+                return answer.getId();
+            }
+        }
+        return -1;
     }
 }

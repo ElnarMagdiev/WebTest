@@ -1,12 +1,11 @@
 package com.magdiev.models;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class Question {
     private int id;
     private String content;
-    private Set<Answer> answers = new HashSet<>();
+    private List<Answer> answers;
 
     public Question(int id, String content) {
         this.id = id;
@@ -17,7 +16,7 @@ public class Question {
         this.content = content;
     }
 
-    public Question(String content, Set<Answer> answers) {
+    public Question(String content, List<Answer> answers) {
         this.content = content;
         this.answers = answers;
     }
@@ -41,11 +40,11 @@ public class Question {
         this.content = content;
     }
 
-    public Set<Answer> getAnswers() {
+    public List<Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(Set<Answer> answers) {
+    public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
 }

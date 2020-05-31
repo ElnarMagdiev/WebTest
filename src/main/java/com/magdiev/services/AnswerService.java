@@ -1,11 +1,9 @@
-package com.magdiev.dao;
+package com.magdiev.services;
 
 import com.magdiev.models.Answer;
-
-
 import java.util.List;
 
-public interface AnswerDao {
+public interface AnswerService {
     List<Answer> getAnswersByQuestionId(int questionId);
     List<Answer> allAnswers();
     void add(Answer answer);
