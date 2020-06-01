@@ -32,8 +32,8 @@ public class QuestionDaoImpl implements QuestionDao {
 
     @Override
     public void add(Question question) {
-        String sql = "INSERT INTO schema_web.questions(id, content) VALUES (?,?)";
-        jdbcTemplate.update(sql, question.getId(), question.getContent());
+        String sql = "INSERT INTO schema_web.questions(content) VALUES (?)";
+        jdbcTemplate.update(sql, question.getContent());
     }
 
     @Override

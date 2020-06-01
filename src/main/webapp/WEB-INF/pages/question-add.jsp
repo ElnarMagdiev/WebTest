@@ -8,21 +8,11 @@
 </head>
 <body>
 <h3>Edit question</h3>
-<form action="/question/edit" method="POST">
+<form action="/question/add" method="post">
     <input type="hidden" name="id" value="${question.id}">
-    <label for="content">Question</label>
     <input type="text" name="content" id="${question.id}" size="50" value="${question.content}">
 
-    <ol type="a">
-        <c:forEach var="answer" items="${question.answers}">
-            <li>
-                    ${answer.content}
-            </li>
-        </c:forEach>
-    </ol>
-
     <br>
-
     <input type="submit" value="Submit">
 </form>
 </body>

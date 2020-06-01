@@ -1,7 +1,5 @@
 package com.magdiev.controllers;
 
-import com.magdiev.dao.AnswerDao;
-import com.magdiev.dao.QuestionDao;
 import com.magdiev.models.Question;
 import com.magdiev.services.AnswerService;
 import com.magdiev.services.QuestionService;

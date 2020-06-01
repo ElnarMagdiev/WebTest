@@ -1,13 +1,17 @@
 package com.magdiev.controllers;
 
+import com.magdiev.exceptions.NotFoundException;
 import com.magdiev.models.Question;
 import com.magdiev.services.AnswerService;
 import com.magdiev.services.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 
 @RestController
+@RequestMapping("/question")
 public class AppController {
 
     private QuestionService questionService;
@@ -23,14 +27,27 @@ public class AppController {
         this.answerService = answerService;
     }
 
-    @RequestMapping(value = "/question/add" , method = RequestMethod.GET)
-    public String edit(@RequestParam("id") int id) {
-
-        return "";
+    @GetMapping("/add")
+    public ModelAndView addQuestion() {
+        return new ModelAndView("question-add");
     }
-    @RequestMapping(value = "/question/edit" , method = RequestMethod.POST)
-    public String edit(@ModelAttribute("question") Question question) {
-        questionService.update(question);
-        return "/";
+
+    @PostMapping(value = "/add")
+    public RedirectView addQuestion(@RequestParam String content) {
+        if (content.isEmpty()) throw new NotFoundException();
+        questionService.add(new Question(content));
+
+        return new RedirectView("/");
+    }
+
+    @GetMapping("{id}/answers")
+    public ModelAndView addAnswers(@PathVariable String id){
+        if (id.isEmpty()) throw new NotFoundException();
+        Question question = questionService.getQuestionById(Integer.parseInt(id));
+        question.setAnswers(answerService.getAnswersByQuestionId(question.getId()));
+        ModelAndView modelAndView = new ModelAndView("question-edit");
+        modelAndView.addObject(question);
+
+        return modelAndView;
     }
 }

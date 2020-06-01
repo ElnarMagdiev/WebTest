@@ -12,6 +12,7 @@ public class Question {
         this.content = content;
     }
 
+
     public Question(String content) {
         this.content = content;
     }

@@ -8,12 +8,13 @@
 </head>
 <body>
 <h3>Web Testing</h3>
+<a href="/question/add">add new question</a>
 <form method="post" action="${pageContext.request.contextPath}/submit">
 <ol type="1">
     <c:forEach var="question" items="${listQuestion}">
         <li>
                 ${question.content}
-                    <a href="/question/add">edit</a>
+            <a href="/question/${question.id}/answers">add answers</a>
             <input type="hidden" name="questionId" value="${question.id}">
             <ol type="a">
             <c:forEach var="answer" items="${question.answers}">
@@ -29,5 +30,6 @@
     <br>
     <input type="submit" value="Submit">
 </form>
+
 </body>
 </html>
