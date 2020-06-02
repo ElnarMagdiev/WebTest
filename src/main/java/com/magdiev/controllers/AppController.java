@@ -1,6 +1,7 @@
 package com.magdiev.controllers;
 
 import com.magdiev.exceptions.NotFoundException;
+import com.magdiev.models.Answer;
 import com.magdiev.models.Question;
 import com.magdiev.services.AnswerService;
 import com.magdiev.services.QuestionService;
@@ -41,11 +42,6 @@ public class AppController {
         Question question = new Question(questionContent);
         questionService.add(question);
 
-        for (int i = 1; i < 5; i++) {
-            String answerContent = request.getParameter("answer_content_" + i);
-            String isCorrect = request.getParameter("answer_isCorrect_" + i);
-        }
-
         return new RedirectView("/");
     }
 
@@ -54,9 +50,23 @@ public class AppController {
         if (id.isEmpty()) throw new NotFoundException();
         Question question = questionService.getQuestionById(Integer.parseInt(id));
         question.setAnswers(answerService.getAnswersByQuestionId(question.getId()));
-        ModelAndView modelAndView = new ModelAndView("question-edit");
+        ModelAndView modelAndView = new ModelAndView("answer-add");
         modelAndView.addObject(question);
 
         return modelAndView;
+    }
+
+    @PostMapping("{id}/answers")
+    public RedirectView addAnswers(HttpServletRequest request){
+        for (int i = 0; i < 4; i++) {
+          String s = request.getParameter("id_" + i);
+
+          String content = request.getParameter("answer_content_" + i);
+          int id = request.getParameter("id_" + i) != null ? Integer.parseInt(request
+                                                                                    .getParameter("id_" + i)) : -1;
+          boolean isCorrect = request.getParameter("answer_isCorrect_" + i) != null;
+        }
+
+        return new RedirectView("/");
     }
 }

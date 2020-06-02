@@ -51,7 +51,7 @@ public class Answer {
         this.content = content;
     }
 
-    public boolean isCorrect() {
+    public boolean getCorrect() {
         return isCorrect;
     }
 

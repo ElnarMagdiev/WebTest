@@ -51,14 +51,14 @@ public class AnswerDaoImpl implements AnswerDao {
         String sql = "INSERT INTO schema_web.answers(id, content, id_question" +
                 ", isCorrect) VALUES (?,?,?,?)";
         jdbcTemplate.update(sql, answer.getId(), answer.getContent()
-                , answer.getId_question(), answer.isCorrect());
+                , answer.getId_question(), answer.getCorrect());
     }
 
     @Override
     public void update(Answer answer) {
         String sql = "UPDATE schema_web.answers SET content = ?, id_question = ?, " +
                 "isCorrect = ? WHERE id = ?";
-        jdbcTemplate.update(sql, answer.getContent(), answer.getId_question(), answer.isCorrect(), answer.getId());
+        jdbcTemplate.update(sql, answer.getContent(), answer.getId_question(), answer.getCorrect(), answer.getId());
     }
 
     @Override
@@ -79,7 +79,7 @@ public class AnswerDaoImpl implements AnswerDao {
     public int findCorrectAnswerByQuestionId(int id_question) {
 
         for (Answer answer: getAnswersByQuestionId(id_question)) {
-            if (answer.isCorrect()) {
+            if (answer.getCorrect()) {
                 return answer.getId();
             }
         }
