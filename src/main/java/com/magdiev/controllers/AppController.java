@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @RestController
 @RequestMapping("/question")
@@ -33,9 +35,16 @@ public class AppController {
     }
 
     @PostMapping(value = "/add")
-    public RedirectView addQuestion(@RequestParam String content) {
-        if (content.isEmpty()) throw new NotFoundException();
-        questionService.add(new Question(content));
+    public RedirectView addQuestion(HttpServletRequest request) {
+
+        String questionContent = request.getParameter("content");
+        Question question = new Question(questionContent);
+        questionService.add(question);
+
+        for (int i = 1; i < 5; i++) {
+            String answerContent = request.getParameter("answer_content_" + i);
+            String isCorrect = request.getParameter("answer_isCorrect_" + i);
+        }
 
         return new RedirectView("/");
     }

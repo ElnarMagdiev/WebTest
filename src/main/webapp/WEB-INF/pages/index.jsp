@@ -14,7 +14,6 @@
     <c:forEach var="question" items="${listQuestion}">
         <li>
                 ${question.content}
-            <a href="/question/${question.id}/answers">add answers</a>
             <input type="hidden" name="questionId" value="${question.id}">
             <ol type="a">
             <c:forEach var="answer" items="${question.answers}">
