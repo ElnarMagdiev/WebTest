@@ -10,9 +10,10 @@ import java.util.List;
 @Repository
 public class QuestionDaoImpl implements QuestionDao {
 
-    @Autowired
+
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public QuestionDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

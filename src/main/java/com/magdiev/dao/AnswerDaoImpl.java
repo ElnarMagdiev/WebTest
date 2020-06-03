@@ -13,9 +13,10 @@ import java.util.Map;
 @Repository
 public class AnswerDaoImpl implements AnswerDao {
 
-    @Autowired
+
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public AnswerDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
