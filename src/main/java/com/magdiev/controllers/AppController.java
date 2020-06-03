@@ -58,13 +58,22 @@ public class AppController {
 
     @PostMapping("{id}/answers")
     public RedirectView addAnswers(HttpServletRequest request){
+        int questionId = Integer.parseInt(request.getParameter("id_question"));
         for (int i = 0; i < 4; i++) {
-          String s = request.getParameter("id_" + i);
-
           String content = request.getParameter("answer_content_" + i);
-          int id = request.getParameter("id_" + i) != null ? Integer.parseInt(request
-                                                                                    .getParameter("id_" + i)) : -1;
+          int id = request.getParameter("id_" + i) != "" ? Integer.parseInt(request
+                                                                             .getParameter("id_" + i)) : -1;
           boolean isCorrect = request.getParameter("answer_isCorrect_" + i) != null;
+          if (id != -1 && content != null) {
+              Answer answer = answerService.getAnswerById(id);
+              answer.setId_question(questionId);
+              answer.setCorrect(isCorrect);
+              answer.setContent(content);
+              answerService.update(answer);
+          } else if (content != null) {
+              Answer answer = new Answer(questionId, content, isCorrect);
+              answerService.add(answer);
+          }
         }
 
         return new RedirectView("/");

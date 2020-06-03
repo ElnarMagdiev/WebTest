@@ -13,18 +13,21 @@
     ${question.content}
     <ol type="a">
 
+        <input type="hidden" name="id_question" value="${question.id}">
+
         <c:forEach var="i" begin="0" end="3">
             <li>
-                <c:if test="${!empty question.answers[i].id}">
-                    <input type="hidden" name="id_${i}" value="${question.answers[i].id}">
-                    <input type="text" name="answer_content_${i}" id="answer_content_${i}"
-                                                                        value="${question.answers[i].content}">
 
-                    <input type="radio" name="answer_isCorrect_${i}" id="answer_isCorrect_${i}" checked>
+                <input type="hidden" name="id_${i}" value="${!empty question.answers[i].id ? question.answers[i].id
+                                                                                                        :''}">
+                <input type="text" name="answer_content_${i}" id="answer_content_${i}"
+                       value="${!empty question.answers[i].content ? question.answers[i].content : ''}">
+
+                <c:if test="${!empty question.answers[i].correct}">
+                    <input type="radio" name="answer_isCorrect" value="isCorrect" checked>
                 </c:if>
-                <c:if test="${empty question.answers[i].id}">
-                    <input type="text" name="answer_content_${i}" id="answer_content_${i}">
-                    <input type="radio" name="answer_isCorrect_${i}" id="answer_isCorrect_${i}">
+                <c:if test="${empty question.answers[i].correct}">
+                    <input type="radio" name="answer_isCorrect" value="isCorrect">
                 </c:if>
             </li>
 
