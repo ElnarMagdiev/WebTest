@@ -4,6 +4,7 @@ public class User {
     private int id;
     private String username;
     private String password;
+    private boolean active;
 
     public User(String username, String password) {
         this.username = username;
@@ -17,6 +18,14 @@ public class User {
     }
 
     public User() {
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public int getId() {
