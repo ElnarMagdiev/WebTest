@@ -8,6 +8,11 @@
     <title>Registration</title>
 </head>
 <body>
+<c:if test="${!empty message}">
+    ${message}
+</c:if>
+
+<br>
 Add new user
 <form action="/registration" method="post">
     <div><label> User Name : <input type="text" name="username"/> </label></div>
