@@ -1,11 +1,10 @@
-package com.magdiev.dao;
+package com.magdiev.services;
 
 import com.magdiev.models.Result;
 
-
 import java.util.List;
 
-public interface ResultDao {
+public interface ResultService {
     void add(Result result);
     List<Result> getResultsByUserId(int id_user);
     List<Result> getAllResults();

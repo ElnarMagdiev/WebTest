@@ -4,19 +4,19 @@ public class Answer {
     private int id;
     private int id_question;
     private String content;
-    private boolean isCorrect;
+    private boolean correct;
 
     public Answer(int id, int id_question, String content, boolean isCorrect) {
         this.id = id;
         this.id_question = id_question;
         this.content = content;
-        this.isCorrect = isCorrect;
+        this.correct = isCorrect;
     }
 
     public Answer(int id_question, String content, boolean isCorrect) {
         this.id_question = id_question;
         this.content = content;
-        this.isCorrect = isCorrect;
+        this.correct = isCorrect;
     }
 
     public Answer(int id_question, String content) {
@@ -51,11 +51,11 @@ public class Answer {
         this.content = content;
     }
 
-    public boolean getCorrect() {
-        return isCorrect;
+    public boolean isCorrect() {
+        return correct;
     }
 
     public void setCorrect(boolean correct) {
-        isCorrect = correct;
+        this.correct = correct;
     }
 }

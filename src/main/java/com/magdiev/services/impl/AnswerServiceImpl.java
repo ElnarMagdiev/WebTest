@@ -1,7 +1,8 @@
-package com.magdiev.services;
+package com.magdiev.services.impl;
 
 import com.magdiev.dao.AnswerDao;
 import com.magdiev.models.Answer;
+import com.magdiev.services.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;

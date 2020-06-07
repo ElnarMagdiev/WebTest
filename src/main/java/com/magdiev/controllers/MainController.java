@@ -1,8 +1,12 @@
 package com.magdiev.controllers;
 
 import com.magdiev.models.Question;
+import com.magdiev.models.Result;
+import com.magdiev.models.User;
 import com.magdiev.services.AnswerService;
 import com.magdiev.services.QuestionService;
+import com.magdiev.services.ResultService;
+import com.magdiev.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +22,18 @@ public class MainController {
 
     private QuestionService questionService;
     private AnswerService answerService;
+    private UserService userService;
+    private ResultService resultService;
+
+    @Autowired
+    public void setResultService(ResultService resultService) {
+        this.resultService = resultService;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Autowired
     public void setQuestionService(QuestionService questionService) {
@@ -50,14 +66,27 @@ public class MainController {
 
     @RequestMapping(value = "submit", method = RequestMethod.POST)
     public String submit(HttpServletRequest request) {
-       String[] question = request.getParameterValues("questionId");
-       int count = 0;
+        String[] question = request.getParameterValues("questionId");
+        int count = 0;
+
         for (String questionId: question) {
             int correctAnswerId = answerService.findCorrectAnswerByQuestionId(Integer.parseInt(questionId));
-            if (correctAnswerId == Integer.parseInt(request.getParameter("question_" + questionId)))
-            count++;
+            String answerId = request.getParameter("question_" + questionId);
+            if (answerId != null && correctAnswerId == Integer.parseInt(answerId))
+                count++;
         }
+        boolean completed = question.length == count;
+
+        User user = userService.findUserByUsername(userService.getCurrentUsername());
+        Result result = new Result(user.getId(), count, completed);
+        resultService.add(result);
+
         request.setAttribute("count", count);
+        request.setAttribute("completed", completed);
+        request.setAttribute("username", user.getUsername());
+        request.setAttribute("betterYou", resultService.findBetterResults(count));
+        request.setAttribute("worseThanYou", resultService.findWorseResults(count));
+
         return "result";
     }
 }

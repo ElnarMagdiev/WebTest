@@ -5,16 +5,18 @@ import com.magdiev.models.Answer;
 import com.magdiev.models.Question;
 import com.magdiev.services.AnswerService;
 import com.magdiev.services.QuestionService;
+import org.apache.jasper.tagplugins.jstl.core.If;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 @RestController
-@RequestMapping("/question")
+@RequestMapping("/questions")
 public class AppController {
 
     private QuestionService questionService;
@@ -30,6 +32,19 @@ public class AppController {
         this.answerService = answerService;
     }
 
+    @GetMapping
+    public ModelAndView questionList() {
+        List<Question> listQuestion = questionService.allQuestions();
+
+        for (Question question: listQuestion) {
+            question.setAnswers(answerService.getAnswersByQuestionId(question.getId()));
+        }
+        ModelAndView modelAndView = new ModelAndView("questions");
+        modelAndView.addObject("listQuestion", listQuestion);
+
+        return modelAndView;
+    }
+
     @GetMapping("/add")
     public ModelAndView addQuestion() {
         return new ModelAndView("question-add");
@@ -42,7 +57,7 @@ public class AppController {
         Question question = new Question(questionContent);
         questionService.add(question);
 
-        return new RedirectView("/");
+        return new RedirectView("/questions");
     }
 
     @GetMapping("{id}/answers")
@@ -63,7 +78,12 @@ public class AppController {
           String content = request.getParameter("answer_content_" + i);
           int id = request.getParameter("id_" + i) != "" ? Integer.parseInt(request
                                                                              .getParameter("id_" + i)) : -1;
-          boolean isCorrect = request.getParameter("answer_isCorrect_" + i) != null;
+          String correctAnswer = null;
+          boolean isCorrect = false;
+          if ((correctAnswer = request.getParameter("answer_isCorrect")) != null) {
+              if (Integer.parseInt(correctAnswer) == i) isCorrect = true;
+          }
+
           if (id != -1 && content != null) {
               Answer answer = answerService.getAnswerById(id);
               answer.setId_question(questionId);
@@ -76,6 +96,6 @@ public class AppController {
           }
         }
 
-        return new RedirectView("/");
+        return new RedirectView("/questions");
     }
 }

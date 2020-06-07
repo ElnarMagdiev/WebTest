@@ -9,7 +9,7 @@
 <body>
 <h3>Web Testing</h3>
 
-<form method="post" action="/question/${question.id}/answers">
+<form method="post" action="/questions/${question.id}/answers">
     ${question.content}
     <ol type="a">
 
@@ -23,12 +23,13 @@
                 <input type="text" name="answer_content_${i}" id="answer_content_${i}"
                        value="${!empty question.answers[i].content ? question.answers[i].content : ''}">
 
-                <c:if test="${!empty question.answers[i].correct}">
-                    <input type="radio" name="answer_isCorrect" value="isCorrect" checked>
+               <c:if test="${question.answers[i].correct == true}">
+                 <input type="radio" name="answer_isCorrect" value="${i}" checked>
                 </c:if>
-                <c:if test="${empty question.answers[i].correct}">
-                    <input type="radio" name="answer_isCorrect" value="isCorrect">
-                </c:if>
+                <c:if test="${question.answers[i].correct != true}">
+                <input type="radio" name="answer_isCorrect" value="${i}">
+                 </c:if>
+
             </li>
 
             <br>
@@ -37,6 +38,6 @@
     <br>
     <input type="submit" value="Submit">
 </form>
-
+<a href="/questions">Назад</a>
 </body>
 </html>

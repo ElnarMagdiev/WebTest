@@ -1,12 +1,15 @@
-package com.magdiev.services;
+package com.magdiev.services.impl;
 
 import com.magdiev.dao.UserDao;
+import com.magdiev.models.Result;
 import com.magdiev.models.User;
+import com.magdiev.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 
 
 @Service
@@ -38,5 +41,16 @@ public class UserServiceImpl implements UserService {
     public void add(User user) {
         userDao.add(user);
     }
+
+    @Override
+    public String getCurrentUsername() {
+        return userDao.getCurrentUsername();
+    }
+
+    @Override
+    public List<User> getUserList() {
+        return userDao.getUserList();
+    }
+
 
 }

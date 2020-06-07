@@ -1,5 +1,6 @@
-package com.magdiev.dao;
+package com.magdiev.dao.impl;
 
+import com.magdiev.dao.QuestionDao;
 import com.magdiev.models.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

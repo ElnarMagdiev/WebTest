@@ -8,12 +8,13 @@
 </head>
 <body>
 <h3>Add question</h3>
-<form action="/question/add" method="post">
+<form action="/questions/add" method="post">
     <input type="hidden" name="id" value="">
     <input type="text" name="content" id="content" size="50">
     <br>
 
     <input type="submit" value="Submit">
 </form>
+<a href="/questions">Назад</a>
 </body>
 </html>

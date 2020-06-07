@@ -4,25 +4,25 @@ public class Result {
     private int id;
     private int id_user;
     private int score;
-    private boolean isCompleted;
+    private boolean completed;
 
-    public Result(int id, int id_user, int score, boolean isCompleted) {
+    public Result(int id, int id_user, int score, boolean completed) {
         this.id = id;
         this.id_user = id_user;
         this.score = score;
-        this.isCompleted = isCompleted;
+        this.completed = completed;
     }
 
-    public Result(int id_user, int score, boolean isCompleted) {
+    public Result(int id_user, int score, boolean completed) {
         this.id_user = id_user;
         this.score = score;
-        this.isCompleted = isCompleted;
+        this.completed = completed;
     }
 
     public Result(int id_user, int score) {
         this.id_user = id_user;
         this.score = score;
-        this.isCompleted = false;
+        this.completed = false;
     }
 
     public Result() {
@@ -53,10 +53,10 @@ public class Result {
     }
 
     public boolean isCompleted() {
-        return isCompleted;
+        return completed;
     }
 
     public void setCompleted(boolean completed) {
-        isCompleted = completed;
+        this.completed = completed;
     }
 }

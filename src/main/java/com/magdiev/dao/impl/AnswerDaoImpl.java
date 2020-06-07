@@ -1,5 +1,6 @@
-package com.magdiev.dao;
+package com.magdiev.dao.impl;
 
+import com.magdiev.dao.AnswerDao;
 import com.magdiev.models.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -30,7 +31,7 @@ public class AnswerDaoImpl implements AnswerDao {
             Answer answer = new Answer();
             answer.setId((Integer) row.get("id"));
             answer.setContent((String)row.get("content"));
-            answer.setCorrect((Boolean) row.get("isCorrect"));
+            answer.setCorrect((Boolean) row.get("correct"));
             answer.setId_question((Integer)row.get("id_question"));
             answerList.add(answer);
         }
@@ -50,16 +51,16 @@ public class AnswerDaoImpl implements AnswerDao {
     @Override
     public void add(Answer answer) {
         String sql = "INSERT INTO schema_web.answers(id, content, id_question" +
-                ", isCorrect) VALUES (?,?,?,?)";
+                ", correct) VALUES (?,?,?,?)";
         jdbcTemplate.update(sql, answer.getId(), answer.getContent()
-                , answer.getId_question(), answer.getCorrect());
+                , answer.getId_question(), answer.isCorrect());
     }
 
     @Override
     public void update(Answer answer) {
         String sql = "UPDATE schema_web.answers SET content = ?, id_question = ?, " +
-                "isCorrect = ? WHERE id = ?";
-        jdbcTemplate.update(sql, answer.getContent(), answer.getId_question(), answer.getCorrect(), answer.getId());
+                "correct = ? WHERE id = ?";
+        jdbcTemplate.update(sql, answer.getContent(), answer.getId_question(), answer.isCorrect(), answer.getId());
     }
 
     @Override
@@ -80,7 +81,7 @@ public class AnswerDaoImpl implements AnswerDao {
     public int findCorrectAnswerByQuestionId(int id_question) {
 
         for (Answer answer: getAnswersByQuestionId(id_question)) {
-            if (answer.getCorrect()) {
+            if (answer.isCorrect()) {
                 return answer.getId();
             }
         }

@@ -12,16 +12,16 @@
 </form>
 <table>
     <tr>
-        <th>Пройти тестирование</th>
-        <th>Редактировать тест</th>
-        <th>Статистика</th>
+        <th></th>
+        <th></th>
+        <th></th>
     </tr>
     <tr>
         <td>
             <a href="/test">Пройти тестирование</a>
         </td>
         <td>
-            <a href="/question">Редактировать тест</a>
+            <a href="/questions">Редактировать тест</a>
         </td>
         <td>
             <a href="/statistic">Статистика</a>

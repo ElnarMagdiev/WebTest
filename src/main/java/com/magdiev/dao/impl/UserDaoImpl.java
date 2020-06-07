@@ -1,11 +1,17 @@
-package com.magdiev.dao;
+package com.magdiev.dao.impl;
 
+import com.magdiev.dao.UserDao;
+import com.magdiev.models.Question;
 import com.magdiev.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -44,7 +50,22 @@ public class UserDaoImpl implements UserDao {
     public void add(User user) {
         String sql = "INSERT INTO schema_web.users(username, password) VALUES (?,?)";
         jdbcTemplate.update(sql, user.getUsername(), user.getPassword());
+        User userDB = findUserByUsername(user.getUsername());
         String sqlRole = "INSERT INTO schema_web.role(name, id_user) VALUES (?,?)";
-        jdbcTemplate.update(sqlRole, "USER", user.getId());
+        jdbcTemplate.update(sqlRole, "USER", userDB.getId());
+    }
+
+    @Override
+    public String getCurrentUsername() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName();
+    }
+
+    @Override
+    public List<User> getUserList() {
+        String sql = "SELECT * FROM schema_web.users";
+        List<User> listUsers = jdbcTemplate.query(sql,
+                BeanPropertyRowMapper.newInstance(User.class));
+        return listUsers;
     }
 }
